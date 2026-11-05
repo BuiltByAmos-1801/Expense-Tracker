@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">₹</div>
+        <div><div class="brand-title">Expense Tracker</div><div class="brand-subtitle">Your money, clearly tracked.</div></div>
+      </div>
+      <button class="icon-btn" id="backupBtn" aria-label="Backup options" title="Backup & restore">⇧</button>
+    </header>
+
+    <main>
+      <section class="welcome-row">
+        <div><p class="eyebrow" id="todayLabel">PERSONAL FINANCE</p><h1>Overview</h1></div>
+        <button class="month-select" id="monthLabel" type="button"></button>
+      </section>
+
+      <section class="hero-card">
+        <div class="hero-top"><span>Total spent this month</span><span class="live-dot">● This month</span></div>
+        <div class="hero-amount" id="monthTotal">₹0</div>
+        <div class="hero-bottom">
+          <div><span class="muted-light">Transactions</span><strong id="monthCount">0</strong></div>
+          <div><span class="muted-light">Daily average</span><strong id="dailyAverage">₹0</strong></div>
+          <div><span class="muted-light">Today</span><strong id="todayTotal">₹0</strong></div>
+        </div>
+        <div class="hero-glow"></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading"><div><p class="eyebrow">QUICK ACTION</p><h2>Add an expense</h2></div><span class="section-icon">＋</span></div>
+        <form id="expenseForm" class="expense-form">
+          <input type="hidden" id="editId">
+          <label class="amount-label" for="amount">Amount</label>
+          <div class="amount-input-wrap"><span>₹</span><input id="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required></div>
+          <div class="form-grid">
+            <label>Category
+              <select id="category" required>
+                <option>Food & Snacks</option><option>Room Rent</option><option>Ration & Grocery</option>
+                <option>Travel</option><option>Electricity & Bills</option><option>Mobile Recharge</option>
+                <option>Shopping</option><option>Medical</option><option>Personal</option><option>Other</option>
+              </select>
+            </label>
+            <label>Payment method
+              <select id="payment"><option>UPI</option><option>Cash</option><option>Card</option><option>Bank Transfer</option><option>Other</option></select>
+            </label>
+            <label>Date<input id="date" type="date" required></label>
+            <label>Time<input id="time" type="time" required></label>
+          </div>
+          <label>Description <span class="optional">Optional</span><input id="description" type="text" maxlength="100" placeholder="e.g. Breakfast, bus fare..."></label>
+          <div class="form-actions"><button class="primary-btn" id="saveBtn" type="submit">＋ Save expense</button><button class="cancel-btn hidden" id="cancelEdit" type="button">Cancel</button></div>
+          <p class="form-hint" id="formHint">Your entry is saved on this device automatically.</p>
+        </form>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading"><div><p class="eyebrow">SPENDING BREAKDOWN</p><h2>By category</h2></div><span class="subtle-label" id="categoryPeriod">This month</span></div>
+        <div class="category-card" id="categoryBreakdown"><div class="empty-state">No expenses this month yet.</div></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading"><div><p class="eyebrow">YOUR RECORDS</p><h2>Expense history</h2></div><span class="count-pill" id="historyCount">0 records</span></div>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Search expenses..." aria-label="Search expenses">
+          <select id="filterMonth" aria-label="Filter month"><option value="all">All months</option></select>
+          <select id="filterCategory" aria-label="Filter category"><option value="all">All categories</option></select>
+        </div>
+        <div id="historyList" class="history-list"><div class="empty-state">Your expenses will appear here.</div></div>
+      </section>
+
+      <section class="section-block insights-block">
+        <div class="section-heading"><div><p class="eyebrow">SPENDING PATTERN</p><h2>Last 7 days</h2></div></div>
+        <div class="weekly-card"><div id="weeklyChart" class="weekly-chart"></div><div class="chart-caption">Daily spending based on saved transactions</div></div>
+      </section>
+
+      <section class="section-block backup-section">
+        <div class="section-heading"><div><p class="eyebrow">KEEP YOUR DATA SAFE</p><h2>Backup & restore</h2></div><span class="section-icon">⇄</span></div>
+        <div class="backup-card">
+          <p>Download your full history as a JSON file, or restore it later on this or another device.</p>
+          <div class="backup-actions">
+            <button class="secondary-btn" id="exportBtn">↓ Export JSON</button>
+            <button class="secondary-btn" id="saveFileBtn">▣ Save / link JSON file</button>
+            <button class="secondary-btn" id="importBtn">↑ Import JSON</button>
+            <input id="importFile" type="file" accept=".json,application/json" hidden>
+          </div>
+          <p class="backup-note" id="backupStatus">Stored locally in this browser. Export a backup regularly.</p>
+        </div>
+      </section>
+    </main>
+    <footer>Made for mindful spending <span>•</span> Your data stays on your device</footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
